@@ -1,0 +1,77 @@
+CREATE OR REPLACE VIEW `ax_portfolio_daily_vals` AS
+ SELECT
+  `environment_id`,
+  `entity_id` 			,
+  `entity_key_01`		,
+  `period_type_id` 		,
+  `period_date` 		,
+  `stat_01` 			as `day_dt_amount`,
+  `stat_02` 			as `day_value`,
+  `stat_03` 			as `delta`,
+  `stat_04` 			as `irr`,
+  `create_by` 			,
+  `create_ts` 			,
+  `update_by` 			,
+  `update_ts` 			,
+  `update_id` 			
+  FROM ax_entity_day_stats
+  WHERE entity_id in ('PFI','PFT')
+  WITH CHECK OPTION
+;
+
+
+
+--- q_inv_val
+
+SELECT 		pitm.portfolio_id, pitm.portfolio_item_id, pitm.account_id, itm.doc_item_date, -(itm.doc_item_account_currency_amount) AS val
+FROM 		ax_docs b
+JOIN 		ax_doc_items itm
+ON 			b.doc_id = itm.doc_id
+JOIN 		ax_portfolio_items pitm
+ON 			pitm.portfolio_item_id = itm.portfolio_item_id
+WHERE		b.doc_type_id = 4 and pitm.account_id = 6 AND itm.doc_item_account_currency_amount <>0 AND 
+			itm.doc_item_type='A' and itm.doc_item_date = '2011-02-04' and pitm.portfolio_id = 1
+ORDER BY 	pitm.portfolio_item_id, itm.doc_item_date
+
+
+--- q_inv_tot_val
+
+SELECT		portfolio_id, account_id, doc_item_date, sum(val) as tot_val
+FROM		(
+	SELECT 		pitm.portfolio_id, pitm.portfolio_item_id, pitm.account_id, itm.doc_item_date, -(itm.doc_item_account_currency_amount) AS val
+	FROM 		ax_docs b
+	JOIN 		ax_doc_items itm
+	ON 			b.doc_id = itm.doc_id
+	JOIN 		ax_portfolio_items pitm
+	ON 			pitm.portfolio_item_id = itm.portfolio_item_id
+	WHERE		b.doc_type_id = 4 and pitm.account_id = 6 AND itm.doc_item_account_currency_amount <>0 AND 
+				itm.doc_item_type='A'
+	ORDER BY 	pitm.portfolio_item_id, itm.doc_item_date) a
+GROUP BY	portfolio_id, account_id, doc_item_date
+
+--- q_inv_purch
+SELECT 		itm.doc_item_date01, -(itm.doc_item_account_currency_amount) AS val
+FROM 		#pfx#ax_docs b
+JOIN 		#pfx#ax_doc_items itm
+ON 			b.doc_id = itm.doc_id
+JOIN 		#pfx#ax_portfolio_items pitm
+ON 			pitm.portfolio_item_id = itm.portfolio_item_id
+WHERE		b.doc_type_id in (2, 3) and itm.doc_item_account_currency_amount <>0 AND 
+			itm.is_doc_item_validated <> 0 and pitm.portfolio_item_id = #portfolio_item_id#  and doc_item_date01 <= '#dtTo#'
+ORDER BY 	itm.doc_item_date01, pitm.portfolio_item_id
+
+--- q_inv_tot_purch
+
+SELECT		doc_item_date01, sum(val) as val
+FROM		(
+	SELECT 		itm.doc_item_date01, -(itm.doc_item_account_currency_amount) AS val
+	FROM 		#pfx#ax_docs b
+	JOIN 		#pfx#ax_doc_items itm
+	ON 			b.doc_id = itm.doc_id
+	JOIN 		#pfx#ax_portfolio_items pitm
+	ON 			pitm.portfolio_item_id = itm.portfolio_item_id
+	WHERE		b.doc_type_id in (2, 3) and itm.doc_item_account_currency_amount <>0 AND 
+				itm.is_doc_item_validated <> 0 and pitm.portfolio_id = #portfolio_id#  and doc_item_date01 <= '#dtTo#'
+	ORDER BY 	itm.doc_item_date01, pitm.portfolio_item_id) a
+GROUP BY	doc_item_date01
+
