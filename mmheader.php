@@ -1,11 +1,10 @@
 <?php // mmheader.php
-require '/home/mondrak1/private/mondrakeNG/vendor/autoload.php';
+require_once 'mmsession.php';
 
 use mondrakeNG\dbol\DbConnection;
 use mondrakeNG\mm\classes\MMUser;
 use mondrakeNG\mm\classes\MMUserLogin;
 
-require_once 'mmsession.php';
 require_once 'mmexchdl.php';
 
 if (isset($_SESSION['mmToken']))	{ 

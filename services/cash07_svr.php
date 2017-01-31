@@ -1,6 +1,4 @@
 <?php
-require '/home/mondrak1/private/mondrakeNG/vendor/autoload.php';
-
 require_once '../mmsession.php';
 
 use mondrakeNG\mm\core\MondrakeRpcServer;
