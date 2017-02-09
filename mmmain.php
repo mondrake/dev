@@ -70,7 +70,7 @@ _END;
 	else
 		$c = "signup";
 	echo "<tr class=$c>";
-	echo "<td><a href='mmaccbalperiods.php?acc=$acc->account_id'>$acc->account_short</a></td>";
+	echo "<td><a href='mmaccbalperiods.php?acc=$acc->account_id&period_type=1'>$acc->account_short</a></td>";
 	echo "<td>$acc->account_desc</td>";
 	if ($ac->account_class_type == 'F')		{
 		echo "<td align=right>";echo(round($as->period_opening_balance,2));echo"</td>";
