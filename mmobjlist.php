@@ -54,7 +54,7 @@ foreach ($colDets as $c => $d)	{
 	else
 		$colName = $c;
 //	echo "<td class='vertical'>$colName</td>";
-	echo "<td><img src='/lab02/sites/default/files/textimage/verthead/$c.png' alt='$c'/></td>";
+	echo "<td><img src='" . TEXTIMAGE_URL . "/$c.png' alt='$c'/></td>";
 }
 echo "</tr>";
 $j = 1;
