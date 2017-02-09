@@ -9,13 +9,14 @@ if (!isset($_GET['acc']))
 	die("Missing parameter.");
 
 $acc = $_GET['acc'];
+$period_type_id = $_GET['period_type'];
 
 $account = new AXAccount;
 $account->read($acc);
 
 $obj = new AXAccountPeriodBalance;
 $colDets = $obj->getColumnProperties();
-$objs = $obj->readMulti("account_id = $acc", "period_year desc, period desc");
+$objs = $obj->readMulti("account_id = $acc and period_type_id = $period_type_id", "period_year desc, period desc");
 
 echo <<<_END
 <!-- The HTML section -->
