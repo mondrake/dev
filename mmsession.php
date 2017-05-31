@@ -1,8 +1,8 @@
 <?php // mmsession.php
 session_start();
 
-require_once '/home/mondrak1/private/mondrakeNG/vendor/autoload.php';
-include_once('/home/mondrak1/private/mondrakeNG/src/mm/MM_settings.php');
+require_once '/var/mondrakeNG/vendor/autoload.php';
+include_once('/var/mondrakeNG/src/mm/MM_settings.php');
 
 $appName = 'mondrake';
 
