@@ -1,6 +1,6 @@
 <?php // mmauth.php
 require_once 'mmsession.php';
-				
+
 use mondrakeNG\mm\classes\MMUser;
 use mondrakeNG\mm\classes\MMUserLogin;
 
@@ -26,7 +26,7 @@ if (isset($_SESSION['mmToken']))	{
 // authentication required
 $mmUserLogin = new MMUserLogin;
 $authParms = array();
-$authParms['mmTokenSecsToExpiration'] = 8*24*3600; 
+$authParms['mmTokenSecsToExpiration'] = 8*24*3600;
 $authParms['mmClient'] = 3;
 
 // authentication via cookie
