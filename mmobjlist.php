@@ -53,8 +53,8 @@ foreach ($colDets as $c => $d)	{
 		$colName = substr($c, 0, 18) . '..';
 	else
 		$colName = $c;
-//	echo "<td class='vertical'>$colName</td>";
-	echo "<td><img src='" . TEXTIMAGE_URL . "/$c.png' alt='$c'/></td>";
+	echo "<td class='vertical'>$colName</td>";
+//	echo "<td><img src='" . TEXTIMAGE_URL . "/$c.png' alt='$c'/></td>";
 }
 echo "</tr>";
 $j = 1;
