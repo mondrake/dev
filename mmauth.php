@@ -65,7 +65,7 @@ if (isset($_POST['mmUser']))	{
 		if ($res == TRUE) {
 			$_SESSION['mmAppEnv'] = $appEnv;
 			$_SESSION['mmToken'] = $authParms['mmToken'];
-			setcookie("mmToken", $authParms['mmToken'], strtotime($authParms[mmTokenExpirationTs]));
+			setcookie("mmToken", $authParms['mmToken'], strtotime($authParms['mmTokenExpirationTs']));
 			header("Location: mmmain.php");
 			die;
 		}
